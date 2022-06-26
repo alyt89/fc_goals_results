@@ -54,7 +54,18 @@ def enter_match_score():
 
 def validate_scores_data(data):
     date = data[0]
+    opposition = data[1]
+    venue = data[2]
+    goals_for = data[3]
+    goals_against = data[4]
+    motm = data[5]
     print(date)
+    print(opposition)
+    print(venue)
+    print(goals_for)
+    print(goals_against)
+    print(motm)
+    print(len(data))
     return len(data)
   
 
@@ -70,5 +81,4 @@ def main():
     Run all main functions
     """
     filter_user_options()
-
 main()
