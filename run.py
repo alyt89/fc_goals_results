@@ -45,12 +45,18 @@ def enter_match_score():
         print("Date (DD-MMM), Opposition name, Venue (H or A), Goals For, Goals Against, MOTM")
         print("Example: 01-Jan, Man U, H, 3, 0, Smith")
         score_data_string = input("Enter here:\n")
-        score_data = score_data_string.split()
+        score_data = score_data_string.split(",")
         print(score_data)
 
-        if validate_scores_data(score_data):
+        if validate_scores_data(score_data) == 6:
             break
 
+
+def validate_scores_data(data):
+    date = data[0]
+    print(date)
+    return len(data)
+  
 
 def check_past_match():
     """
