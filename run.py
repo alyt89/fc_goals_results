@@ -39,6 +39,19 @@ def enter_match_score():
     """
     print("Ready to enter new match score")
 
+    while True:
+        print("Enter match data here")
+        print("Please enter in following format:")
+        print("Date (DD-MMM), Opposition name, Venue (H or A), Goals For, Goals Against, MOTM")
+        print("Example: 01-Jan, Man U, H, 3, 0, Smith")
+        score_data_string = input("Enter here:\n")
+        score_data = score_data_string.split()
+        print(score_data)
+
+        if validate_scores_data(score_data):
+            break
+
+
 def check_past_match():
     """
     Function to analyse the existing data on worksheet and provide
