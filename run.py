@@ -12,8 +12,30 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('fc_goals_results')
 
-twenty_one = SHEET.worksheet('2021')
+TWENTY_ONE = SHEET.worksheet('2021')
+TWENTY_TWO = SHEET.worksheet('2022')
 
-data = twenty_one.get_all_values()
+data = TWENTY_ONE.get_all_values()
 
-print(data)
+def filter_user_options():
+    print("Choose from one of the following options:")
+    print("1: Enter new match score")
+    print("2: Check past match data")
+
+    filter_choice = input("Enter your selection here:\n")
+
+    filter_choice_value = int(filter_choice)
+
+    if filter_choice_value == 1:
+        enter_match_score()
+    elif filter_choice_value == 2:
+        check_past_match()
+
+
+def enter_match_score():
+    print("Ready to enter new match score")
+
+def check_past_match():
+    print("Ready to check match score")
+
+filter_user_options()
