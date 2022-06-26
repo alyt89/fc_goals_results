@@ -33,9 +33,23 @@ def filter_user_options():
 
 
 def enter_match_score():
+    """
+    Function to filter user option and enter a new match score
+    to be updated on the worksheet.
+    """
     print("Ready to enter new match score")
 
 def check_past_match():
+    """
+    Function to analyse the existing data on worksheet and provide
+    data dependent on options provided.
+    """
     print("Ready to check match score")
 
-filter_user_options()
+def main():
+    """
+    Run all main functions
+    """
+    filter_user_options()
+
+main()
