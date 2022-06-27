@@ -22,10 +22,7 @@ def filter_user_options():
         print("Choose from one of the following options:")
         print("1: Enter new match score")
         print("2: Check past match data")
-
         filter_choice = input("Enter your selection here:\n")
-
-        
 
         try:
             choice = int(filter_choice)
@@ -34,25 +31,19 @@ def filter_user_options():
             print("Please enter valid number")
             filter_user_options()
 
-        try:
-            choice = int(filter_choice)
-            if choice < 1:
-                print("Please select a valid number")
-                filter_user_options()
-            elif choice > 2:
-                print("Please select a valid number")
-                filter_user_options()
-        except:
-            print("Please select a valid option")    
+        choice = int(filter_choice)
+        if choice < 1:
+            print("Please select a valid number")
+            filter_user_options()
+        elif choice > 2:
+            print("Please select a valid number")
+            filter_user_options()
 
-        filter_choice_value = int(filter_choice)
-
-        if filter_choice_value == 1:
+        if choice == 1:
             enter_match_score()
-        elif filter_choice_value == 2:
+        elif choice == 2:
             check_past_match()
         
-
 
 def enter_match_score():
     """
@@ -100,11 +91,11 @@ def check_past_match():
     """
     print("Ready to check match score\n")
     print("Enter season you wish to check")
-    print("2021 / 2022 / all")
+    print("2021 / 2022 ")
 
-    past_match_year = input("Enter your selection:\n")
+    season = input("Enter your selection:\n")
     
-    past_match_filter(past_match_year)
+    past_match_filter(season)
 
 
 def update_score(score):
@@ -127,24 +118,46 @@ def past_match_filter(season):
     print("1: Check result by opposition")
     
     past_match_filter_selection = input("Enter here:\n")
-    print("Enter opposition name below:")
-    opposition = input("Opposition name:\n")
     
     if past_match_filter_selection == "1":
         score_by_opposition(season, opposition)
 
 
 def score_by_opposition(season, opposition):
-    print(f"Checking scores against {opposition} for season {season}")
+    print("Select from: Fairfield, Buxton, Altrincham, Hawkes, Falcons, Lakers")
+    print("Enter opposition name below:")
+    opposition = input("Opposition name:\n")
+    team_name = opposition.capitalize()
+    print(f"Checking scores against {team_name} for season {season}\n")
     season_to_check = SHEET.worksheet(season)
-    cell_results = season_to_check.findall(opposition)
+    cell_results = season_to_check.findall(team_name)
     matching_cell_rows = []
     for cell in cell_results:
         matching_cell_rows.append(cell.row)
-    print(matching_cell_rows)
+
+    game_data = []
 
     for row in matching_cell_rows:
-        print(season_to_check.row_values(row))
+        game_data.append(season_to_check.row_values(row))
+
+    match_one = game_data[0]
+    match_two = game_data[1]
+
+    print("Match 1:\n")
+    print(f"Date: {match_one[0]}")
+    print(f"Opposition: {match_one[1]}")
+    print(f"Venue: {match_one[2]}")
+    print(f"Goals For: {match_one[3]}")
+    print(f"Goals Against: {match_one[4]}")
+    print(f"MOTM: {match_one[5]}\n")
+    print("Match 2:\n")
+    print(f"Date: {match_two[0]}")
+    print(f"Opposition: {match_two[1]}")
+    print(f"Venue: {match_two[2]}")
+    print(f"Goals For: {match_two[3]}")
+    print(f"Goals Against: {match_two[4]}")
+    print(f"MOTM: {match_two[5]}\n")
+
 
 def main():
     """
