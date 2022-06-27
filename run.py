@@ -168,6 +168,11 @@ def score_by_opposition(season, opposition):
 
 
 def biggest_win(season):
+    """
+    Function to check the biggest win in a specified
+    season. Generates list of goals scored and goals
+    conceded and finds the biggest difference between the two.
+    """
     season_to_check = SHEET.worksheet(season)
     goals_scored = season_to_check.col_values(4)
     goals_conceded = season_to_check.col_values(5)
