@@ -15,7 +15,6 @@ SHEET = GSPREAD_CLIENT.open('fc_goals_results')
 TWENTY_ONE = SHEET.worksheet('2021')
 TWENTY_TWO = SHEET.worksheet('2022')
 
-data = TWENTY_ONE.get_all_values()
 
 def filter_user_options():
     print("Choose from one of the following options:")
@@ -43,31 +42,32 @@ def enter_match_score():
         print("Enter match data here")
         print("Please enter in following format:")
         print("Date (DD-MMM), Opposition name, Venue (H or A), Goals For, Goals Against, MOTM")
-        print("Example: 01-Jan, Man U, H, 3, 0, Smith")
+        print("Example: 01-Jan, Man U, H, 3, 0, Smith\n")
+        print("To go to main menu enter 'main'\n")
         score_data_string = input("Enter here:\n")
         score_data = score_data_string.split(",")
         print(score_data)
 
-        if validate_scores_data(score_data) == 6:
-            break
+        if score_data[0] == "main":
+            filter_user_options()
 
+        if validate_scores_data(score_data):
+            print("data valid")
+            update_score(score_data)
+            
 
 def validate_scores_data(data):
-    date = data[0]
-    opposition = data[1]
-    venue = data[2]
-    goals_for = data[3]
-    goals_against = data[4]
-    motm = data[5]
-    print(date)
-    print(opposition)
-    print(venue)
-    print(goals_for)
-    print(goals_against)
-    print(motm)
-    print(len(data))
-    return len(data)
-  
+
+    try:
+        if len(data) != 6:
+            raise ValueError(
+                f"Exactly 6 values required, you provided {len(data)}"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+    
+    return True
 
 def check_past_match():
     """
@@ -76,9 +76,25 @@ def check_past_match():
     """
     print("Ready to check match score")
 
+
+def update_score(score):
+    """
+    Uses the score data input by user to update spreadsheet.
+    """
+    print("Select which season you want to update (2021 or 2022)")
+    year = input("Enter Season:\n")
+    print(f"Year selected is {year}")
+    
+    season_to_update = SHEET.worksheet(year)
+    season_to_update.append_row(score)
+    print("score successfully updated")
+    filter_user_options()
+
+
 def main():
     """
     Run all main functions
     """
-    filter_user_options()
+    new_or_past = filter_user_options()
+
 main()
