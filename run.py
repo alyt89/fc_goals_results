@@ -12,9 +12,6 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('fc_goals_results')
 
-TWENTY_ONE = SHEET.worksheet('2021')
-TWENTY_TWO = SHEET.worksheet('2022')
-
 
 def filter_user_options():
     """
@@ -74,7 +71,7 @@ def enter_match_score():
     return score_data        
 
 
-def validate_scores_data(data):#
+def validate_scores_data(data):
     """
     Function to validate the data entered by the user when
     entering a new match score
@@ -88,7 +85,6 @@ def validate_scores_data(data):#
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
         return False
-    
     return True
 
 
@@ -142,13 +138,22 @@ def past_match_filter(season):
     if past_match_filter_selection == "3":
         heaviest_defeat(season)
 
-    print("Select from: Fairfield, Buxton, Altrincham, Hawkes, Falcons, Lakers")
+    print("Select from: Fairfield, Buxton,"
+          "Altrincham, Hawkes, Falcons, Lakers")
     print("Enter opposition name below:")
     opposition = input("Opposition name:\n")
 
     if past_match_filter_selection == "1":
         score_by_opposition(season, opposition)
 
+
+def check_opposition(season, opposition):
+    worksheet = SHEET.worksheet(season)
+    cell = worksheet.find(opposition.capitalize())
+
+    if cell is None:
+        print("Opposition name not found")
+        past_match_filter(season)
 
 
 def score_by_opposition(season, opposition):
@@ -158,6 +163,7 @@ def score_by_opposition(season, opposition):
     worksheet.
     """
     
+    check_opposition(season, opposition)
     team_name = opposition.capitalize()
     print(f"Checking scores against {team_name} for season {season}\n")
     season_to_check = SHEET.worksheet(season)
@@ -189,6 +195,8 @@ def score_by_opposition(season, opposition):
     print(f"Goals Against: {match_two[4]}")
     print(f"MOTM: {match_two[5]}\n")
 
+    filter_user_options()
+
 
 def heaviest_defeat(season):
     """
@@ -213,11 +221,15 @@ def heaviest_defeat(season):
     max_goal_difference_index = goal_difference.index(max_goal_difference)
     max_goal_difference_row = (max_goal_difference_index + 2)
 
-    print(f"Heaviest defeat in {season} against {season_to_check.cell(max_goal_difference_row, 2).value}")
+    print(f"Heaviest defeat in {season} against"
+          f"{season_to_check.cell(max_goal_difference_row, 2).value}"
+          )
 
-    print(f"Score {season_to_check.cell(max_goal_difference_row, 4).value} - {season_to_check.cell(max_goal_difference_row, 5).value}")
+    print(f"Score {season_to_check.cell(max_goal_difference_row, 4).value}"
+          f"- {season_to_check.cell(max_goal_difference_row, 5).value}")
 
     filter_user_options()
+
 
 def biggest_win(season):
     """
@@ -225,9 +237,9 @@ def biggest_win(season):
     season. Generates list of goals scored and goals
     conceded and finds the biggest difference between the two.
     """
-    season_to_check = SHEET.worksheet(season)
-    goals_scored = season_to_check.col_values(4)
-    goals_conceded = season_to_check.col_values(5)
+    year = SHEET.worksheet(season)
+    goals_scored = season.col_values(4)
+    goals_conceded = season.col_values(5)
 
     goals_scored.pop(0)
     goals_conceded.pop(0)
@@ -244,16 +256,14 @@ def biggest_win(season):
     max_goal_difference_index = goal_difference.index(max_goal_difference)
     max_goal_difference_row = (max_goal_difference_index + 2)
 
-    print(f"Biggest win in {season} against {season_to_check.cell(max_goal_difference_row, 2).value}")
+    print(f"Biggest win in {season} against" 
+          f"{year.cell(max_goal_difference_row, 2).value}"
+          )
 
-    print(f"Score {season_to_check.cell(max_goal_difference_row, 4).value} - {season_to_check.cell(max_goal_difference_row, 5).value}")
+    print(f"Score {year.cell(max_goal_difference_row, 4).value}"
+          f"- {year.cell(max_goal_difference_row, 5).value}")
 
     filter_user_options()
 
-def main():
-    """
-    Run all main functions
-    """
-    filter_user_options()
 
-main()
+filter_user_options()
