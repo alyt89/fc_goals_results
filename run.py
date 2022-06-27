@@ -17,6 +17,10 @@ TWENTY_TWO = SHEET.worksheet('2022')
 
 
 def filter_user_options():
+    """
+    Initial function to give user the filter to choose between
+    entering a new match score or checking past match data
+    """
 
     while True:
         print("Choose from one of the following options:")
@@ -50,6 +54,7 @@ def enter_match_score():
     Function to filter user option and enter a new match score
     to be updated on the worksheet.
     """
+
     print("Ready to enter new match score")
     print("Enter match data here")
     print("Please enter in following format:")
@@ -70,7 +75,11 @@ def enter_match_score():
     return score_data        
 
 
-def validate_scores_data(data):
+def validate_scores_data(data):#
+    """
+    Function to validate the data entered by the user when
+    entering a new match score
+    """
 
     try:
         if len(data) != 6:
@@ -89,6 +98,7 @@ def check_past_match():
     Function to analyse the existing data on worksheet and provide
     data dependent on options provided.
     """
+    
     print("Ready to check match score\n")
     print("Enter season you wish to check")
     print("2021 / 2022 ")
@@ -102,6 +112,7 @@ def update_score(score):
     """
     Uses the score data input by user to update spreadsheet.
     """
+
     print("Select which season you want to update (2021 or 2022)")
     year = input("Enter Season:\n")
     print(f"Year selected is {year}")
@@ -113,6 +124,11 @@ def update_score(score):
 
 
 def past_match_filter(season):
+    """
+    Function to filter the users selection for past match data
+    and determine which following function to run.
+    """
+    
     print(f"season option selected is {season}")
     print("Select from one of the following options")
     print("1: Check result by opposition")
@@ -124,6 +140,9 @@ def past_match_filter(season):
     if past_match_filter_selection == "2":
         biggest_win(season)
 
+    if past_match_filter_selection == "3":
+        heaviest_defeat(season)
+
     print("Select from: Fairfield, Buxton, Altrincham, Hawkes, Falcons, Lakers")
     print("Enter opposition name below:")
     opposition = input("Opposition name:\n")
@@ -134,7 +153,12 @@ def past_match_filter(season):
 
 
 def score_by_opposition(season, opposition):
-
+    """
+    Function collects the opposition name specified by
+    the user and finds all matches from the relevant
+    worksheet.
+    """
+    
     team_name = opposition.capitalize()
     print(f"Checking scores against {team_name} for season {season}\n")
     season_to_check = SHEET.worksheet(season)
@@ -167,6 +191,40 @@ def score_by_opposition(season, opposition):
     print(f"MOTM: {match_two[5]}\n")
 
 
+def heaviest_defeat(season):
+    """
+    Function to check the heaviest defeat in a specified
+    season. Generates list of goals scored and goals
+    conceded and finds the biggest difference between the two.
+    """
+    season_to_check = SHEET.worksheet(season)
+    goals_scored = season_to_check.col_values(4)
+    goals_conceded = season_to_check.col_values(5)
+
+    goals_scored.pop(0)
+    goals_conceded.pop(0)
+
+    print(goals_scored)
+    print(goals_conceded)
+
+    goal_difference = []
+
+    goals_combined = zip(goals_conceded, goals_scored)
+    for a, b in goals_combined:
+        goal_difference.append(int(a)-int(b))
+    
+    print(f"Goal difference for each match is: {goal_difference}")
+
+    max_goal_difference = max(goal_difference)
+    max_goal_difference_index = goal_difference.index(max_goal_difference)
+    max_goal_difference_row = (max_goal_difference_index + 2)
+
+    print(f"Heaviest defeat in {season} against {season_to_check.cell(max_goal_difference_row, 2).value}")
+
+    print(f"Score {season_to_check.cell(max_goal_difference_row, 4).value} - {season_to_check.cell(max_goal_difference_row, 5).value}")
+
+    filter_user_options()
+
 def biggest_win(season):
     """
     Function to check the biggest win in a specified
@@ -190,6 +248,14 @@ def biggest_win(season):
         goal_difference.append(int(a)-int(b))
     
     print(f"Goal difference for each match is: {goal_difference}")
+
+    max_goal_difference = max(goal_difference)
+    max_goal_difference_index = goal_difference.index(max_goal_difference)
+    max_goal_difference_row = (max_goal_difference_index + 2)
+
+    print(f"Biggest win in {season} against {season_to_check.cell(max_goal_difference_row, 2).value}")
+
+    print(f"Score {season_to_check.cell(max_goal_difference_row, 4).value} - {season_to_check.cell(max_goal_difference_row, 5).value}")
 
     filter_user_options()
 
