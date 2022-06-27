@@ -17,18 +17,21 @@ TWENTY_TWO = SHEET.worksheet('2022')
 
 
 def filter_user_options():
-    print("Choose from one of the following options:")
-    print("1: Enter new match score")
-    print("2: Check past match data")
 
-    filter_choice = input("Enter your selection here:\n")
+    while True:
+        print("Choose from one of the following options:")
+        print("1: Enter new match score")
+        print("2: Check past match data")
 
-    filter_choice_value = int(filter_choice)
+        filter_choice = input("Enter your selection here:\n")
 
-    if filter_choice_value == 1:
-        enter_match_score()
-    elif filter_choice_value == 2:
-        check_past_match()
+        filter_choice_value = int(filter_choice)
+
+        if filter_choice_value == 1:
+            enter_match_score()
+        elif filter_choice_value == 2:
+            check_past_match()
+        break
 
 
 def enter_match_score():
@@ -37,24 +40,24 @@ def enter_match_score():
     to be updated on the worksheet.
     """
     print("Ready to enter new match score")
+    print("Enter match data here")
+    print("Please enter in following format:")
+    print("Date, Opposition, Venue, Goals For, Goals Against, MOTM")
+    print("Example: 01-Jan, Man U, H, 3, 0, Smith\n")
+    print("To go to main menu enter 'main'\n")
+    score_data_string = input("Enter here:\n")
+    score_data = score_data_string.split(",")
+    print(score_data)
 
-    while True:
-        print("Enter match data here")
-        print("Please enter in following format:")
-        print("Date (DD-MMM), Opposition name, Venue (H or A), Goals For, Goals Against, MOTM")
-        print("Example: 01-Jan, Man U, H, 3, 0, Smith\n")
-        print("To go to main menu enter 'main'\n")
-        score_data_string = input("Enter here:\n")
-        score_data = score_data_string.split(",")
-        print(score_data)
+    if score_data[0] == "main":
+        filter_user_options()
 
-        if score_data[0] == "main":
-            filter_user_options()
+    if validate_scores_data(score_data):
+        print("data valid")
+        update_score(score_data)
 
-        if validate_scores_data(score_data):
-            print("data valid")
-            update_score(score_data)
-            
+    return score_data        
+
 
 def validate_scores_data(data):
 
@@ -69,12 +72,19 @@ def validate_scores_data(data):
     
     return True
 
+
 def check_past_match():
     """
     Function to analyse the existing data on worksheet and provide
     data dependent on options provided.
     """
-    print("Ready to check match score")
+    print("Ready to check match score\n")
+    print("Enter season you wish to check")
+    print("2021 / 2022 / all")
+
+    past_match_year = input("Enter your selection:\n")
+    
+    past_match_filter(past_match_year)
 
 
 def update_score(score):
@@ -91,10 +101,14 @@ def update_score(score):
     filter_user_options()
 
 
+def past_match_filter(season):
+    print(f"season option selected is {season}")
+
+
 def main():
     """
     Run all main functions
     """
-    new_or_past = filter_user_options()
+    filter_user_options()
 
 main()
