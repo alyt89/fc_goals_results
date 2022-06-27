@@ -34,6 +34,17 @@ def filter_user_options():
             print("Please enter valid number")
             filter_user_options()
 
+        try:
+            choice = int(filter_choice)
+            if choice < 1:
+                print("Please select a valid number")
+                filter_user_options()
+            elif choice > 2:
+                print("Please select a valid number")
+                filter_user_options()
+        except:
+            print("Please select a valid option")    
+
         filter_choice_value = int(filter_choice)
 
         if filter_choice_value == 1:
