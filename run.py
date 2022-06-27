@@ -116,17 +116,25 @@ def past_match_filter(season):
     print(f"season option selected is {season}")
     print("Select from one of the following options")
     print("1: Check result by opposition")
+    print("2: Biggest Win")
+    print("3: Heaviest Defeat")
     
     past_match_filter_selection = input("Enter here:\n")
     
+    if past_match_filter_selection == "2":
+        biggest_win(season)
+
+    print("Select from: Fairfield, Buxton, Altrincham, Hawkes, Falcons, Lakers")
+    print("Enter opposition name below:")
+    opposition = input("Opposition name:\n")
+
     if past_match_filter_selection == "1":
         score_by_opposition(season, opposition)
 
 
+
 def score_by_opposition(season, opposition):
-    print("Select from: Fairfield, Buxton, Altrincham, Hawkes, Falcons, Lakers")
-    print("Enter opposition name below:")
-    opposition = input("Opposition name:\n")
+
     team_name = opposition.capitalize()
     print(f"Checking scores against {team_name} for season {season}\n")
     season_to_check = SHEET.worksheet(season)
@@ -158,6 +166,27 @@ def score_by_opposition(season, opposition):
     print(f"Goals Against: {match_two[4]}")
     print(f"MOTM: {match_two[5]}\n")
 
+
+def biggest_win(season):
+    season_to_check = SHEET.worksheet(season)
+    goals_scored = season_to_check.col_values(4)
+    goals_conceded = season_to_check.col_values(5)
+
+    goals_scored.pop(0)
+    goals_conceded.pop(0)
+
+    print(goals_scored)
+    print(goals_conceded)
+
+    goal_difference = []
+
+    goals_combined = zip(goals_scored, goals_conceded)
+    for a, b in goals_combined:
+        goal_difference.append(int(a)-int(b))
+    
+    print(f"Goal difference for each match is: {goal_difference}")
+
+    filter_user_options()
 
 def main():
     """
