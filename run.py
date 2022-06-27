@@ -25,13 +25,22 @@ def filter_user_options():
 
         filter_choice = input("Enter your selection here:\n")
 
+        
+
+        try:
+            choice = int(filter_choice)
+            choice += 1
+        except ValueError:
+            print("Please enter valid number")
+            filter_user_options()
+
         filter_choice_value = int(filter_choice)
 
         if filter_choice_value == 1:
             enter_match_score()
         elif filter_choice_value == 2:
             check_past_match()
-        break
+        
 
 
 def enter_match_score():
@@ -107,19 +116,24 @@ def past_match_filter(season):
     print("1: Check result by opposition")
     
     past_match_filter_selection = input("Enter here:\n")
+    print("Enter opposition name below:")
+    opposition = input("Opposition name:\n")
     
     if past_match_filter_selection == "1":
-        score_by_opposition(season)
+        score_by_opposition(season, opposition)
 
 
-def score_by_opposition(season):
-    print(f"Checking score by opposition for season {season}")
+def score_by_opposition(season, opposition):
+    print(f"Checking scores against {opposition} for season {season}")
     season_to_check = SHEET.worksheet(season)
-    cell_results = season_to_check.findall("Fairfield")
+    cell_results = season_to_check.findall(opposition)
     matching_cell_rows = []
     for cell in cell_results:
         matching_cell_rows.append(cell.row)
     print(matching_cell_rows)
+
+    for row in matching_cell_rows:
+        print(season_to_check.row_values(row))
 
 def main():
     """
