@@ -32,7 +32,7 @@ def filter_user_options():
             choice = int(filter_choice)
             choice += 1
         except ValueError:
-            print("Please enter valid number")
+            print("Please enter a valid number")
             filter_user_options()
 
         choice = int(filter_choice)
@@ -63,13 +63,12 @@ def enter_match_score():
     print("To go to main menu enter 'main'\n")
     score_data_string = input("Enter here:\n")
     score_data = score_data_string.split(",")
-    print(score_data)
 
     if score_data[0] == "main":
         filter_user_options()
 
     if validate_scores_data(score_data):
-        print("data valid")
+        print("Data valid")
         update_score(score_data)
 
     return score_data        
@@ -119,7 +118,7 @@ def update_score(score):
     
     season_to_update = SHEET.worksheet(year)
     season_to_update.append_row(score)
-    print("score successfully updated")
+    print("Score successfully updated")
     filter_user_options()
 
 
@@ -204,16 +203,11 @@ def heaviest_defeat(season):
     goals_scored.pop(0)
     goals_conceded.pop(0)
 
-    print(goals_scored)
-    print(goals_conceded)
-
     goal_difference = []
 
     goals_combined = zip(goals_conceded, goals_scored)
     for a, b in goals_combined:
         goal_difference.append(int(a)-int(b))
-    
-    print(f"Goal difference for each match is: {goal_difference}")
 
     max_goal_difference = max(goal_difference)
     max_goal_difference_index = goal_difference.index(max_goal_difference)
@@ -237,9 +231,6 @@ def biggest_win(season):
 
     goals_scored.pop(0)
     goals_conceded.pop(0)
-
-    print(goals_scored)
-    print(goals_conceded)
 
     goal_difference = []
 
