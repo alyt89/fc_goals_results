@@ -103,7 +103,23 @@ def update_score(score):
 
 def past_match_filter(season):
     print(f"season option selected is {season}")
+    print("Select from one of the following options")
+    print("1: Check result by opposition")
+    
+    past_match_filter_selection = input("Enter here:\n")
+    
+    if past_match_filter_selection == "1":
+        score_by_opposition(season)
 
+
+def score_by_opposition(season):
+    print(f"Checking score by opposition for season {season}")
+    season_to_check = SHEET.worksheet(season)
+    cell_results = season_to_check.findall("Fairfield")
+    matching_cell_rows = []
+    for cell in cell_results:
+        matching_cell_rows.append(cell.row)
+    print(matching_cell_rows)
 
 def main():
     """
