@@ -1,31 +1,38 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# FC Goals
 
-Welcome alyt89,
+FC Goals is a fictional football (soccer) team with its results stored in a Google Sheets worksheet. This is a Python terminal app to analyse the results and add new match results also.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
 
-## Reminders
+## How to Use
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+Users are presented with various filters through the app to guide them to the option they would like to use.
 
-## Creating the Heroku app
+The primary filter allows the user to either enter new match data or check past match data.
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+Depending on their selection they will be taken to the next relevant option with further sub-filters available on the 'past match data' filter.
 
-1. `heroku/python`
-2. `heroku/nodejs`
+## Features
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+- Enter new details for FC Goals which are updated in real time on the Google Sheets linked.
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+- Validates new data entered is of sufficient length.
 
-Connect your GitHub repository and deploy as normal.
+- Offers various filters to check past match results.
 
-## Constraints
+- Set up to work if further seasons are added later and if further results are added to the sheet.
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+- Prints results of past match data to the user depending on their input.
 
------
-Happy coding!
+## Future Features
+
+The app could be further enhanced in the future by implementing:
+
+- Score predictor 
+
+    - Analyse past results against an opposition and get average goals scored/conceded.
+    - Analyse recent form and average goals scored/conceded again.
+    - Combine a mean of these averages and round suitably to create a score prediction. 
+
+- Top Scorer 
+
+    - Add 'Goalscorer(s)' column to the sheet and use this data to analyse the top scorer for a particular season.
