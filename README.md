@@ -36,3 +36,16 @@ The app could be further enhanced in the future by implementing:
 - Top Scorer 
 
     - Add 'Goalscorer(s)' column to the sheet and use this data to analyse the top scorer for a particular season.
+
+## Language and model used
+
+The app uses only Python language and is primarily a chain of user inputs that lead to relevant functions depending on the user's selection.
+
+Gspread API is used for the linking of the app and to the Google Sheets data for FC Goals as well as Gsprea methods. The Google Sheets data can be found on the following link:
+
+
+The Credentials from google.oauth2.service.account is also required in the run.py file to ensure relevant credentials can allow the pull and push of data between the app and the google sheets
+
+Within the past match data filter there are gspread methods used to access and filter the data appropriately to return the correct results.
+
+For loops and if statements are used to check against the user's selections and return the correct data to printed to the terminal.
