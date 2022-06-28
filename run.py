@@ -210,9 +210,9 @@ def heaviest_defeat(season):
     season. Generates list of goals scored and goals
     conceded and finds the biggest difference between the two.
     """
-    season_to_check = SHEET.worksheet(season)
-    goals_scored = season_to_check.col_values(4)
-    goals_conceded = season_to_check.col_values(5)
+    year = SHEET.worksheet(season)
+    goals_scored = year.col_values(4)
+    goals_conceded = year.col_values(5)
 
     goals_scored.pop(0)
     goals_conceded.pop(0)
@@ -228,11 +228,11 @@ def heaviest_defeat(season):
     max_goal_difference_row = (max_goal_difference_index + 2)
 
     print(f"Heaviest defeat in {season} against"
-          f"{season_to_check.cell(max_goal_difference_row, 2).value}"
+          f" {year.cell(max_goal_difference_row, 2).value}"
           )
 
-    print(f"Score {season_to_check.cell(max_goal_difference_row, 4).value}"
-          f"- {season_to_check.cell(max_goal_difference_row, 5).value}")
+    print(f"Score {year.cell(max_goal_difference_row, 4).value}"
+          f" - {year.cell(max_goal_difference_row, 5).value}")
 
     filter_user_options()
 
@@ -244,8 +244,8 @@ def biggest_win(season):
     conceded and finds the biggest difference between the two.
     """
     year = SHEET.worksheet(season)
-    goals_scored = season.col_values(4)
-    goals_conceded = season.col_values(5)
+    goals_scored = year.col_values(4)
+    goals_conceded = year.col_values(5)
 
     goals_scored.pop(0)
     goals_conceded.pop(0)
@@ -261,11 +261,11 @@ def biggest_win(season):
     max_goal_difference_row = (max_goal_difference_index + 2)
 
     print(f"Biggest win in {season} against"
-          f"{year.cell(max_goal_difference_row, 2).value}"
+          f" {year.cell(max_goal_difference_row, 2).value}"
           )
 
     print(f"Score {year.cell(max_goal_difference_row, 4).value}"
-          f"- {year.cell(max_goal_difference_row, 5).value}")
+          f" - {year.cell(max_goal_difference_row, 5).value}")
 
     filter_user_options()
 

@@ -2,6 +2,9 @@
 
 FC Goals is a fictional football (soccer) team with its results stored in a Google Sheets worksheet. This is a Python terminal app to analyse the results and add new match results also.
 
+[Click here for the link to my live project](https://fc-goals.herokuapp.com/)
+
+
 
 ## How to Use
 
@@ -41,7 +44,9 @@ The app could be further enhanced in the future by implementing:
 
 The app uses only Python language and is primarily a chain of user inputs that lead to relevant functions depending on the user's selection.
 
-Gspread API is used for the linking of the app and to the Google Sheets data for FC Goals as well as Gsprea methods. The Google Sheets data can be found on the following link:
+Gspread API is used for the linking of the app and to the Google Sheets data for FC Goals as well as Gspread methods. The Google Sheets data can be found on the following link:
+
+[Click here](https://docs.google.com/spreadsheets/d/1oxZT51qHpiZh39yspIBTBg7NI4O8NV3WUB0Umf_VutE/edit?usp=sharing)
 
 
 The Credentials from google.oauth2.service.account is also required in the run.py file to ensure relevant credentials can allow the pull and push of data between the app and the google sheets
