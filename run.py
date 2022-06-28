@@ -20,6 +20,9 @@ def filter_user_options():
     """
 
     while True:
+        print("----------------------------")
+        print("Welcome to FC Goals Database")
+        print("----------------------------")
         print("Choose from one of the following options:")
         print("1: Enter new match score")
         print("2: Check past match data")
@@ -44,14 +47,14 @@ def filter_user_options():
             enter_match_score()
         elif choice == 2:
             check_past_match()
-        
+
 
 def enter_match_score():
     """
     Function to filter user option and enter a new match score
     to be updated on the worksheet.
     """
-
+    print("----------------------------")
     print("Ready to enter new match score")
     print("Enter match data here")
     print("Please enter in following format:")
@@ -68,7 +71,7 @@ def enter_match_score():
         print("Data valid")
         update_score(score_data)
 
-    return score_data        
+    return score_data
 
 
 def validate_scores_data(data):
@@ -93,13 +96,13 @@ def check_past_match():
     Function to analyse the existing data on worksheet and provide
     data dependent on options provided.
     """
-    
+
     print("Ready to check match score\n")
     print("Enter season you wish to check")
     print("2021 / 2022 ")
 
     season = input("Enter your selection:\n")
-    
+
     past_match_filter(season)
 
 
@@ -111,10 +114,11 @@ def update_score(score):
     print("Select which season you want to update (2021 or 2022)")
     year = input("Enter Season:\n")
     print(f"Year selected is {year}")
-    
+
     season_to_update = SHEET.worksheet(year)
     season_to_update.append_row(score)
     print("Score successfully updated")
+    print("----------------------------")
     filter_user_options()
 
 
@@ -123,23 +127,24 @@ def past_match_filter(season):
     Function to filter the users selection for past match data
     and determine which following function to run.
     """
-    
+
     print(f"season option selected is {season}")
     print("Select from one of the following options")
     print("1: Check result by opposition")
     print("2: Biggest Win")
     print("3: Heaviest Defeat")
-    
+
     past_match_filter_selection = input("Enter here:\n")
-    
+
     if past_match_filter_selection == "2":
         biggest_win(season)
 
     if past_match_filter_selection == "3":
         heaviest_defeat(season)
 
+    print("----------------------------")
     print("Select from: Fairfield, Buxton,"
-          "Altrincham, Hawkes, Falcons, Lakers")
+          " Altrincham, Hawkes, Falcons, Lakers")
     print("Enter opposition name below:")
     opposition = input("Opposition name:\n")
 
@@ -162,9 +167,10 @@ def score_by_opposition(season, opposition):
     the user and finds all matches from the relevant
     worksheet.
     """
-    
+
     check_opposition(season, opposition)
     team_name = opposition.capitalize()
+    print("----------------------------")
     print(f"Checking scores against {team_name} for season {season}\n")
     season_to_check = SHEET.worksheet(season)
     cell_results = season_to_check.findall(team_name)
@@ -249,14 +255,12 @@ def biggest_win(season):
     goals_combined = zip(goals_scored, goals_conceded)
     for a, b in goals_combined:
         goal_difference.append(int(a)-int(b))
-    
-    print(f"Goal difference for each match is: {goal_difference}")
 
     max_goal_difference = max(goal_difference)
     max_goal_difference_index = goal_difference.index(max_goal_difference)
     max_goal_difference_row = (max_goal_difference_index + 2)
 
-    print(f"Biggest win in {season} against" 
+    print(f"Biggest win in {season} against"
           f"{year.cell(max_goal_difference_row, 2).value}"
           )
 
