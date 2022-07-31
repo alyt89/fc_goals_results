@@ -118,7 +118,7 @@ def check_past_match():
         print("Please select a valid season")
         filter_user_options()
 
-    past_match_filter(season)
+    past_match_filter(str(season))
 
 
 def update_score(score):
