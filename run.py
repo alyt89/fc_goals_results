@@ -101,7 +101,22 @@ def check_past_match():
     print("Enter season you wish to check")
     print("2021 / 2022 ")
 
-    season = input("Enter your selection:\n")
+    year = input("Enter your selection:\n")
+
+    try:
+        season = int(year)
+        season += 1
+    except ValueError:
+        print("Please enter a valid season, either 2021 or 2022")
+        check_past_match()
+
+    season = int(year)        
+    if season < 2021:
+        print("Please select a valid season")
+        check_past_match()
+    elif choice > 2022:
+        print("Please select a valid season")
+        check_past_match()
 
     past_match_filter(season)
 
